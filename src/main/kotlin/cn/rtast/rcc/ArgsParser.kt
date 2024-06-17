@@ -15,9 +15,8 @@
  */
 
 
-package cn.rtast.rcc.utils
+package cn.rtast.rcc
 
-import cn.rtast.rcc.models.Config
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
@@ -32,7 +31,7 @@ class ArgsParser(private val args: Array<String>) {
             ArgType.String,
             fullName = "host",
             description = "Host to listen"
-        ).default("0.0.0.0")
+        ).required()
 
         val port by parser.option(
             ArgType.Int,
@@ -44,9 +43,13 @@ class ArgsParser(private val args: Array<String>) {
             ArgType.String,
             fullName = "pwd",
             description = "Password"
-        ).required()
+        )
 
         parser.parse(args)
-        return Config(host, port, password)
+
+        password?.let {
+            return Config(host, port, password)
+        }
+        return Config(host, port, null)
     }
 }

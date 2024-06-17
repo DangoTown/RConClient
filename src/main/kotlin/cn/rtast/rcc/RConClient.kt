@@ -17,14 +17,16 @@
 
 package cn.rtast.rcc
 
-import cn.rtast.rcc.utils.ArgsParser
-import cn.rtast.rcc.utils.RCon
+import cn.rtast.rcon.RCon
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
     val conf = ArgsParser(args).parse()
     val rcon = RCon(conf.host, conf.port)
-    rcon.authenticate(conf.password)
+    conf.password?.let {
+        rcon.authenticate(it)
+        println("Rcon authenticated")
+    }
     println("Type :quit to exit.")
     while (true) {
         print("Command >>")

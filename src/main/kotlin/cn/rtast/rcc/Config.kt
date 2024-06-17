@@ -15,6 +15,10 @@
  */
 
 
-package cn.rtast.rcc.exceptions
+package cn.rtast.rcc
 
-class ConnectFailedException(message: String?): Exception(message)
+data class Config(
+    val host: String,
+    val port: Int,
+    val password: String?
+)
